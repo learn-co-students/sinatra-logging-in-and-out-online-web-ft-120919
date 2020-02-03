@@ -11,9 +11,12 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/login' do
-    @user = User.find_by(username: params[:user][:username])
-    # binding.pry
+    # @user = User.find_by(username: params[:user][:username])
+    @user = User.find_by(username: params[:username])
+
+    
     if @user 
+      # binding.pry
       session[:user_id] = @user.id
       redirect to '/account'
     else
@@ -21,8 +24,8 @@ class ApplicationController < Sinatra::Base
     end
 
     get '/error' do
-      # "Hello World"
-      erb :error
+      "Hello World"
+      # erb :error
     end
 
   end
