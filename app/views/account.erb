@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>title</title>
-    <link rel="stylesheet" href="stylesheets/bootstrap.css" type="text/css">  
-  </head>
-  <body id="page-top">
-  <ul>
-    <% if Helpers.is_logged_in? %>
-    <h1>Welcome <%= Helpers.current_user.username %></h1>
-    <li><%= Helpers.current_user.balance %></li>
-    <a href="/logout">Log Out</a>
+<ul>
+    <% if Helpers.is_logged_in(session)? %>
+    <li><%= "Welcome #{Helpers.current_user(session).username}" %></li>
+    <li><%= Helpers.current_user(session).balance %></li>
+    
     <% end %>
     </ul>
-
-
-    
-  
-    
-
-  </body>
-</html>
+<a href="/logout">Log Out</a>

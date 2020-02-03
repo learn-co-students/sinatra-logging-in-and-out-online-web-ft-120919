@@ -22,12 +22,10 @@ class ApplicationController < Sinatra::Base
     else
       redirect to '/error'
     end
+  end
 
-    get '/error' do
-      "Hello World"
-      # erb :error
-    end
-
+  get '/error' do
+    erb :error
   end
 
   get '/account' do

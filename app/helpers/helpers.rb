@@ -7,8 +7,6 @@ class Helpers
     def self.is_logged_in?(session)
         # binding.pry
         !!session[:user_id] ? true : false
-        
-
     end
 
 end
