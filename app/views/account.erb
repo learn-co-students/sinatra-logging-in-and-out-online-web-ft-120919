@@ -1,5 +1,5 @@
 <ul>
-    <% if Helpers.is_logged_in(session)? %>
+    <% if Helpers.is_logged_in?(session) %>
     <li><%= "Welcome #{Helpers.current_user(session).username}" %></li>
     <li><%= Helpers.current_user(session).balance %></li>
     
