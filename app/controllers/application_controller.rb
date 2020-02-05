@@ -11,15 +11,33 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/login' do
-
+    #binding.pry
+    puts params 
+    @user = User.find_by(username: params[:username], password: params[:password])
+    if @user
+      #puts "Login information found in database"
+      session[:user_id] = @user.id
+      redirect "/account" 
+    else 
+      #puts "Login info not found in database"
+      erb :'error'
+    end #if
   end
 
   get '/account' do
-
+    #@user = User.find(session[:user_id])
+    #binding.pry 
+    if Helpers.is_logged_in?(session)
+      #binding.pry 
+      erb :'account'
+    else
+      erb :'error'
+    end #if
   end
 
   get '/logout' do
-
+    session.clear 
+    redirect '/'
   end
 
 
