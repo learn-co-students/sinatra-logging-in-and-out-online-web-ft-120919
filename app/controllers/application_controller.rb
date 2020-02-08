@@ -15,25 +15,26 @@ class ApplicationController < Sinatra::Base
     # @user.save
     if @user && @user.username == params[:username]
       session[:user_id] = @user.id 
-    redirect to('/account') 
+    redirect to '/account'
   end 
   erb :error
   end
 
   get '/account' do
     # if is_logged_in?
-    #   @user = current_user
-    #   @account = @user.account
+      # @user = current_user
+      # @account = @user.account
     @user = User.find_by(id: session[:user_id])
-    if @user 
+    if @user
       erb :account
-    else erb :error
+      else 
+        erb :error
     end 
   end
 
   get '/logout' do
     session.clear
-    redirect to('/')
+    redirect to '/'
   end
 
 
