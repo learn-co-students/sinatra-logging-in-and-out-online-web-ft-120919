@@ -15,14 +15,14 @@ describe 'ApplicationController' do
 
   describe "POST '/login'" do
     before do
-      @user1 = User.create(:username => "skittles123", :password => "iluvskittles", :balance => 1000)
-      @user2 = User.create(:username => "flatiron4lyfe", :password => "Rubie!", :balance => 500)
-      @user3 = User.create(:username => "kittens1265", :password => "crazycatlady", :balance => 10000)
+      @user1 = User.create(:name => "skittles123", :password => "iluvskittles", :balance => 1000)
+      @user2 = User.create(:name => "flatiron4lyfe", :password => "Rubie!", :balance => 500)
+      @user3 = User.create(:name => "kittens1265", :password => "crazycatlady", :balance => 10000)
     end
 
     it "returns a 302 redirect status code" do
       params = {
-        "username"=> "skittles123", "password" => "iluvskittles"
+        "name"=> "skittles123", "password" => "iluvskittles"
       }
       post '/login', params
       expect(last_response.status).to eq(302)
@@ -30,15 +30,15 @@ describe 'ApplicationController' do
 
     it "sets session[:user_id] equal to id of the user" do
       post '/login', {
-        "username"=> "flatiron4lyfe", "password" => "Rubie!"
+        "name"=> "flatiron4lyfe", "password" => "Rubie!"
       }
       follow_redirect!
       expect(session[:user_id]).to eq(2)
     end
 
-    it "displays the correct username based on session[:user_id]" do
+    it "displays the correct name based on session[:user_id]" do
       post '/login', {
-        "username"=> "kittens1265", "password" => "crazycatlady"
+        "name"=> "kittens1265", "password" => "crazycatlady"
       }
       follow_redirect!
       expect(last_response.body).to include('Welcome kittens1265')
@@ -46,7 +46,7 @@ describe 'ApplicationController' do
 
     it "displays the correct balance based on session[:user_id]" do
       post '/login', {
-        "username"=> "kittens1265", "password" => "crazycatlady"
+        "name"=> "kittens1265", "password" => "crazycatlady"
       }
       follow_redirect!
       expect(last_response.body).to include('10000')
@@ -54,16 +54,16 @@ describe 'ApplicationController' do
 
     it "displays a 'Log Out' link" do
       post '/login', {
-        "username"=> "kittens1265", "password" => "crazycatlady"
+        "name"=> "kittens1265", "password" => "crazycatlady"
       }
       follow_redirect!
       expect(last_response.body).to include('Log Out')
     end
 
 
-    it "shows the error page if username and ID do not match available users" do
+    it "shows the error page if name and ID do not match available users" do
       post '/login', {
-        "username"=> "joe", "password" => "nopassword"
+        "name"=> "joe", "password" => "nopassword"
       }
       expect(last_response.body).to include('You Must <a href="/">Log In</a> to View Your Balance')
     end
@@ -76,9 +76,9 @@ describe 'ApplicationController' do
     end
 
     it 'displays the account information if a user is logged in' do
-      user1 = User.create(:username => "skittles123", :password => "iluvskittles", :balance => 1000)
+      user1 = User.create(:name => "skittles123", :password => "iluvskittles", :balance => 1000)
       params = {
-        "username"=> "skittles123", "password" => "iluvskittles"
+        "name"=> "skittles123", "password" => "iluvskittles"
       }
       post '/login', params
       get '/account'
@@ -89,9 +89,9 @@ describe 'ApplicationController' do
 
   describe "GET '/logout'" do
     it "clears the session" do
-      user1 = User.create(:username => "skittles123", :password => "iluvskittles", :balance => 1000)
+      user1 = User.create(:name => "skittles123", :password => "iluvskittles", :balance => 1000)
       params = {
-        "username"=> "skittles123", "password" => "iluvskittles"
+        "name"=> "skittles123", "password" => "iluvskittles"
       }
       post '/login', params
       get '/logout'
